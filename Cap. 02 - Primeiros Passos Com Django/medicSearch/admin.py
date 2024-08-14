@@ -8,10 +8,14 @@ class ProfileAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at' 
     
     # Select which attributes will be displayed
-    list_display = ('user', 'user__is_active', 'role', 'birthday',)
+    list_display = ('user', 'user__is_active', 'role', 'birth', 'specialitiesList', 'addressesList')
     # Enable edition link for the following attributes 
     lsit_display_links = ('user', 'role',)
-
+    class Media:
+        css = {
+            'all': ('css/custom.css',),
+        }
+        js = ('js/custom.js',)
     # Cutomizes the representation of empty field
     empty_value_display = 'Vazio'
 
@@ -19,7 +23,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('user__is_active',)
 
     # Determines which field will be displayed in the form
-    fields = ('user', ('role',), 'image', 'birthday', 'specialities', 'addresses',)
+    # fields = ('user', ('role',), 'image', 'birthday', 'specialities', 'addresses',)
 
     # It is the opposite from fields, therefore removing the fields included in the tuple
     exclude = ('favorites', 'created_at', 'updated_at')
@@ -30,7 +34,35 @@ class ProfileAdmin(admin.ModelAdmin):
     # Enables the search by field in the admin profile list
     search_fields = ('user__username',)
 
+    # Is similar to fields, however it is possible to group the fields to organize the data flow
+    fieldsets = (
+        ('Usuário',{
+            'fields': ('user', 'birthday', 'image'),
+        }),
+        ('Função', {
+            'fields': ('role',),
+        }),
+        ('Extras', {
+            'fields': ('specialities', 'addresses'),
+        }),
+    )
 
+    # Custom the display of a field
+    def birth(self, obj:Profile):
+        if obj.birthday:
+            return obj.birthday.strftime("%d/%m/%Y")
+        
+    birth.empty_value_display = '__/__/____'
+
+    # Modeling ManyToMany relationships
+    def specialitiesList(self, obj:Profile) -> str:
+        return [sp.name for sp in obj.specialities.all()]
+    
+    def addressesList(self, obj:Profile) -> str:
+        return [ad.name for ad in obj.addresses.all()]
+    
+    addressesList.empty_value_display = ''
+    
 # Note the argument ProfileAdmin bellow, is mandatory to include it in the register of the Profile model
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(State)
