@@ -10,3 +10,4 @@ ROLE_CHOICE = (
 )
 
 from .Profile import Profile
+from .Speciality import Speciality
