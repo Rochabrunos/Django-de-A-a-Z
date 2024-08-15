@@ -1,6 +1,6 @@
 from .settings import *
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = '%68js_p+#hy*=#lxkc-h%*2=#i49f96vyd!su=&4ve92ou+g%m'
 
@@ -11,7 +11,7 @@ DATABASES = {
         'NAME': 'medicSearchAdmin',  
         'USER': 'brunos1212',  
         'PASSWORD': 'password',  
-        'HOST': '127.0.0.1',  
-        'PORT': '5499',
+        'HOST': 'db',  
+        'PORT': '5432',
     }
 }

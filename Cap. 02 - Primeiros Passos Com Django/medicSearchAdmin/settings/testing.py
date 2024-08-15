@@ -11,7 +11,7 @@ DATABASES = {
         'NAME': 'medicSearchAdmin',  
         'USER': 'brunos1212',  
         'PASSWORD': 'password',  
-        'HOST': '127.0.0.1',  
-        'PORT': '5499',
+        'HOST': 'db',  
+        'PORT': '5432',
     }
 }
