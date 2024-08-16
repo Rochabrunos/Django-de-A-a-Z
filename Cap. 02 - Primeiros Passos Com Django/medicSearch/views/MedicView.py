@@ -1,5 +1,6 @@
-from django.http import HttpResponse
 from medicSearch.models import Profile
+from django.shortcuts import render
+
 def list_medics_view(request):
     name = request.GET.get('name')
     speciality = request.GET.get('speciality')
@@ -22,5 +23,7 @@ def list_medics_view(request):
             medics.filter(addresses__neighborhood__city__state=state)
     print(medics.all())
 
-
-    return HttpResponse('Listagem de 1 ou mais médicos')
+    context = {
+        'medics': medics,
+    }
+    return render(request, template_name='medic/medics.html', context=context, status=200)
