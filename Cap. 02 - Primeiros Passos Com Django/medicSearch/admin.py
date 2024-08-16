@@ -9,6 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
     
     # Select which attributes will be displayed
     list_display = ('user', 'user__is_active', 'role', 'birth', 'specialitiesList', 'addressesList')
+    
     # Enable edition link for the following attributes 
     lsit_display_links = ('user', 'role',)
     class Media:
@@ -29,7 +30,7 @@ class ProfileAdmin(admin.ModelAdmin):
     exclude = ('favorites', 'created_at', 'updated_at')
 
     # Makes the field read-only in the creation and update form
-    readonly_fields = ('user',)
+    #readonly_fields = ('user',)
 
     # Enables the search by field in the admin profile list
     search_fields = ('user__username',)
@@ -55,10 +56,9 @@ class ProfileAdmin(admin.ModelAdmin):
     birth.empty_value_display = '__/__/____'
 
     # Modeling ManyToMany relationships
-    def specialitiesList(self, obj:Profile) -> str:
+    def specialitiesList(self, obj:Profile):
         return [sp.name for sp in obj.specialities.all()]
-    
-    def addressesList(self, obj:Profile) -> str:
+    def addressesList(self, obj:Profile):
         return [ad.name for ad in obj.addresses.all()]
     
     addressesList.empty_value_display = ''
