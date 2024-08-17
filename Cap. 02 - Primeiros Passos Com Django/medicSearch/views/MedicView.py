@@ -1,4 +1,4 @@
-from medicSearch.models import Profile
+from medicSearch.models import Profile, User
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -77,3 +77,30 @@ def add_favorite_view(request):
     arguments += "&msg=%s&type=%s" % (msg, _type)
 
     return redirect(to='/medic/%s' % arguments)
+
+def remove_favorite_view(request):
+    page = request.POST.get("page")
+    id = int(request.POST.get("id"))
+    print("Id:%d" % (id))
+    try:
+        profile = Profile.objects.filter(user=request.user).first()
+        medic = Profile.objects.filter(user__id=id).first()
+        if medic == None:
+            raise Exception("Médico não cadastrado")
+        profile.favorites.remove(medic.user)
+        profile.save()
+        msg = "Favorito removido com sucesso."
+        _type = "success"
+    except Exception as e:
+        print("Erro %s" % e)
+        msg = "Um erro ocorreu ao remover o médico nos favoritos."
+        _type = "danger"
+    
+    if page:
+        arguments = "?page=%s" % (page)
+    else:
+        arguments = "?page=1"
+    
+    arguments += "&msg=%s&type=%s" % (msg, _type)
+
+    return redirect(to='/profile/%s' % arguments)

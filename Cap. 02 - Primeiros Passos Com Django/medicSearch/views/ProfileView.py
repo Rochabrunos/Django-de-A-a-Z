@@ -4,8 +4,8 @@ from django.core.paginator import Paginator
 
 def list_profile_view(request, id=None):
     if id is None and request.user.is_authenticated:
-        profile = Profile.objects.filter(user__id=request.user).first()
-    elif id is None:
+        profile = Profile.objects.filter(user__id=request.user.id).first()
+    elif id is not None:
         profile = Profile.objects.filter(user__id=id).first()
     elif not request.user.is_authenticated:
         redirect(to='/')
