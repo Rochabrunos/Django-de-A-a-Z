@@ -11,6 +11,7 @@ def list_profile_view(request, id=None):
         redirect(to='/')
 
     favorites = profile.show_favorites()
+    ratings = profile.show_ratings()
     if len(favorites) > 0:
         paginator = Paginator(favorites, 8)
         page = request.GET.get('page')
@@ -19,6 +20,7 @@ def list_profile_view(request, id=None):
     context = {
         'profile': profile,
         'favorites': favorites,
+        'ratings': ratings,
     }
         
     return render(request, template_name="profile/profile.html", context= context, status=200)
