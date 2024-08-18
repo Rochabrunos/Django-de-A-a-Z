@@ -10,4 +10,4 @@ class Rating(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self) -> str:
-        return 'Avaliador {} | Avaliado {}'.format(self.user.name, self.user_rated.name)
+        return 'Avaliador {} | Avaliado {}'.format(self.user.first_name, self.user_rated.first_name)
