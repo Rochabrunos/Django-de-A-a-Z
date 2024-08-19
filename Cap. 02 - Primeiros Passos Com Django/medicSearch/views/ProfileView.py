@@ -31,7 +31,7 @@ def edit_profile(request):
 
     emailUnused = True
     if request.method == 'POST':
-        profileForm = UserProfileForm(request.POST, instance=profile)
+        profileForm = UserProfileForm(request.POST, request.FILES, instance=profile)
         userForm = UserForm(request.POST, instance=request.user)
 
         verifyEmail = Profile.objects.filter(user__email=request.POST['email']).exclude(user__id=request.user.id).first()
