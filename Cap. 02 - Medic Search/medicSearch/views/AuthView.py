@@ -31,7 +31,7 @@ def login_view(request):
         'title': 'Login',
         'button_text': 'Entrar',
         'link_text': 'Registrar',
-        'link_href': '/register',
+        'link_href': '/register/',
     }
 
     return render(request, template_name='auth/auth.html', context=context, status=200)
@@ -39,12 +39,12 @@ def login_view(request):
 def register_view(request):
     registerForm = RegisterForm()
     message = None
-
+    print(registerForm)
     if request.user.is_authenticated:
         return redirect('/')
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['emal']
+        email = request.POST['email']
         password = request.POST['password']
         registerForm = RegisterForm(request.POST)
 
@@ -80,7 +80,7 @@ def register_view(request):
         'title': 'Registrar',
         'button_text': 'Registrar',
         'link_text': 'Login',
-        'link_href': '/login',
+        'link_href': '/login/',
     }
-
+    
     return render(request, template_name='auth/auth.html', context=context, status=200)
