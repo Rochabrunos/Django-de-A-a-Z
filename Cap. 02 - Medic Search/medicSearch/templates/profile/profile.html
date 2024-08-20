@@ -24,7 +24,7 @@
                         <li class="list-group-item">Nome: {{profile.user.get_full_name | default:"Sem nome"}}</li>
                         <li class="list-group-item">Usuário: {{profile.user.username | default:"Sem usuário"}}</li>
                         <li class="list-group-item">Email: {{profile.user.email | default:"Sem email"}}</li>
-                        <li class="list-group-item">Nascimento: {{profile.user.birthday | date:'d/m/y' | default:"Sem data"}}</li>
+                        <li class="list-group-item">Nascimento: {{profile.birthday | date:'d/m/y' | default:"Sem data"}}</li>
                         {% if profile.role == 2 %}
                         <li class="list-group-item">Nota: {{profile.show_scoring_average }}</li>
                         <li class="list-group-item">Especialidades: {{profile.specialities.all | join:", " }}</li>

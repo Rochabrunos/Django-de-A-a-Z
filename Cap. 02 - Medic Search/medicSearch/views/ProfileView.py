@@ -29,7 +29,7 @@ def list_profile_view(request, id=None):
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     emailUnused = True
-    msg = None
+    message = None
 
     if request.method == 'POST':
         profileForm = UserProfileForm(request.POST, request.FILES, instance=profile)
@@ -40,6 +40,8 @@ def edit_profile(request):
     else:
         profileForm = UserProfileForm(instance=profile)
         userForm = UserForm(instance=request.user)
+
+    print(profile.birthday)
 
     if profileForm.is_valid() and userForm.is_valid() and emailUnused:
         profileForm.save()
