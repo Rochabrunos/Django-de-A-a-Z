@@ -30,6 +30,12 @@
                         <li class="list-group-item">Especialidades: {{profile.specialities.all | join:", " }}</li>
                         {% endif %}
 
+                        {% if profile.role == 2 and request.user.is_authenticated %}
+                            <li class="list-group-item">
+                                <a class="btn btn-warning" href={% url 'rate-medic' profile.user.id %}>Avaliar<i class="fa fa-star"></i></a>
+                            </li>
+                        {% endif %}
+
                 </div>
                 {% if profile.role == 1 or profile.role == 3 %}
                     <div class="col-xs-12 col-md-9" id="favorites-area">
