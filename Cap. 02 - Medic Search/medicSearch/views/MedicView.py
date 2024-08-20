@@ -1,8 +1,9 @@
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 from medicSearch.models import Profile, Rating
 from medicSearch.forms.MedicForm import MedicRatingForm
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from django.core.paginator import Paginator
 
 def list_medics_view(request):
     name = request.GET.get('name')
@@ -82,7 +83,7 @@ def add_favorite_view(request):
 def remove_favorite_view(request):
     page = request.POST.get("page")
     id = int(request.POST.get("id"))
-    print("Id:%d" % (id))
+
     try:
         profile = Profile.objects.filter(user=request.user).first()
         medic = Profile.objects.filter(user__id=id).first()
@@ -106,6 +107,7 @@ def remove_favorite_view(request):
 
     return redirect(to='/profile/%s' % arguments)
 
+@login_required
 def rate_medic(request, medic_id=None):
     medic = Profile.objects.filter(user__id=medic_id).first()
     rating = Rating.objects.filter(user=request.user, user_rated=medic.user).first()
