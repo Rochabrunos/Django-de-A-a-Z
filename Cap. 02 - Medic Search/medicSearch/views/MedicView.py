@@ -113,7 +113,7 @@ def rate_medic(request, medic_id=None):
     initial = {'user': request.user, 'user_rated': medic.user}
 
     if request.method == 'POST':
-        ratingForm = MedicRatingForm(request.POST, instance=rating, initial=intial)
+        ratingForm = MedicRatingForm(request.POST, instance=rating, initial=initial)
     else:
         ratingForm = MedicRatingForm(instance=rating, initial=initial)
     
